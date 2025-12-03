@@ -181,7 +181,7 @@ agent = workflow.compile()
 
 ```bash
 # 저장소 클론
-git clone https://github.com/yourusername/kaist-caio9-ambient-agent.git
+git clone https://github.com/EclipseFever/kaist-caio9-ambient-agent.git
 cd kaist-caio9-ambient-agent
 
 # 가상환경 생성
@@ -385,7 +385,7 @@ Phase 2: 시나리오별 테스트 실행
 - Chen & Guestrin (2016). XGBoost: A Scalable Tree Boosting System
 
 ### 관련 프로젝트
-- [kaist-caio9-autoencoder](https://github.com/yourusername/kaist-caio9-autoencoder) - AutoEncoder 기반 이상 탐지
+- [kaist-caio9-autoencoder](https://github.com/EclipseFever/kaist-caio9-autoencoder) - AutoEncoder 기반 이상 탐지
 
 ---
 
