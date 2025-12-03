@@ -1,0 +1,220 @@
+@prefix : <http://kaist.ac.kr/elderly#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================
+# Elderly Care Ontology for Ambient Agent
+# KAIST 김재철AI대학원 CAIO 9기
+# ============================================
+
+# --------------------------------------------
+# Ontology Metadata
+# --------------------------------------------
+<http://kaist.ac.kr/elderly> rdf:type owl:Ontology ;
+    rdfs:label "Elderly Care Vital Sign Ontology"@en ;
+    rdfs:label "독거노인 생체신호 온톨로지"@ko ;
+    rdfs:comment "60GHz mmWave 레이더 센서 기반 독거노인 Vital Sign 모니터링을 위한 온톨로지"@ko ;
+    owl:versionInfo "1.0.0" .
+
+# ============================================
+# Classes
+# ============================================
+
+:Patient rdf:type owl:Class ;
+    rdfs:label "Patient"@en ;
+    rdfs:label "환자"@ko ;
+    rdfs:comment "모니터링 대상자 (독거노인)"@ko .
+
+:Sensor rdf:type owl:Class ;
+    rdfs:label "Sensor"@en ;
+    rdfs:label "센서"@ko ;
+    rdfs:comment "60GHz mmWave 레이더 센서"@ko .
+
+:VitalObservation rdf:type owl:Class ;
+    rdfs:label "Vital Sign Observation"@en ;
+    rdfs:label "생체신호 관측"@ko ;
+    rdfs:comment "특정 시점의 Vital Sign 측정 데이터"@ko .
+
+:Alert rdf:type owl:Class ;
+    rdfs:label "Alert"@en ;
+    rdfs:label "알림"@ko ;
+    rdfs:comment "이상 상황 발생 시 생성되는 알림"@ko .
+
+:AlertLevel rdf:type owl:Class ;
+    rdfs:label "Alert Level"@en ;
+    rdfs:label "알림 수준"@ko .
+
+# ============================================
+# Object Properties
+# ============================================
+
+:aboutPatient rdf:type owl:ObjectProperty ;
+    rdfs:label "about patient"@en ;
+    rdfs:domain :VitalObservation ;
+    rdfs:range :Patient ;
+    rdfs:comment "관측 대상 환자"@ko .
+
+:measuredBy rdf:type owl:ObjectProperty ;
+    rdfs:label "measured by"@en ;
+    rdfs:domain :VitalObservation ;
+    rdfs:range :Sensor ;
+    rdfs:comment "측정한 센서"@ko .
+
+:hasAlert rdf:type owl:ObjectProperty ;
+    rdfs:label "has alert"@en ;
+    rdfs:domain :Patient ;
+    rdfs:range :Alert ;
+    rdfs:comment "환자에게 발생한 알림"@ko .
+
+:hasAlertLevel rdf:type owl:ObjectProperty ;
+    rdfs:label "has alert level"@en ;
+    rdfs:domain :Alert ;
+    rdfs:range :AlertLevel ;
+    rdfs:comment "알림 수준"@ko .
+
+# ============================================
+# Data Properties
+# ============================================
+
+:patientId rdf:type owl:DatatypeProperty ;
+    rdfs:label "patient ID"@en ;
+    rdfs:domain :Patient ;
+    rdfs:range xsd:string .
+
+:patientName rdf:type owl:DatatypeProperty ;
+    rdfs:label "patient name"@en ;
+    rdfs:domain :Patient ;
+    rdfs:range xsd:string .
+
+:hrValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "heart rate value"@en ;
+    rdfs:label "심박수"@ko ;
+    rdfs:domain :VitalObservation ;
+    rdfs:range xsd:float ;
+    rdfs:comment "심박수 (bpm)"@ko .
+
+:brValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "breathing rate value"@en ;
+    rdfs:label "호흡수"@ko ;
+    rdfs:domain :VitalObservation ;
+    rdfs:range xsd:float ;
+    rdfs:comment "호흡수 (breaths/min)"@ko .
+
+:observedAt rdf:type owl:DatatypeProperty ;
+    rdfs:label "observed at"@en ;
+    rdfs:domain :VitalObservation ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "관측 시간"@ko .
+
+:sensorId rdf:type owl:DatatypeProperty ;
+    rdfs:label "sensor ID"@en ;
+    rdfs:domain :Sensor ;
+    rdfs:range xsd:string .
+
+:sensorType rdf:type owl:DatatypeProperty ;
+    rdfs:label "sensor type"@en ;
+    rdfs:domain :Sensor ;
+    rdfs:range xsd:string .
+
+# ============================================
+# Alert Level Individuals
+# ============================================
+
+:NORMAL rdf:type :AlertLevel ;
+    rdfs:label "NORMAL"@en ;
+    rdfs:label "정상"@ko ;
+    :levelCode "0"^^xsd:integer .
+
+:WARNING rdf:type :AlertLevel ;
+    rdfs:label "WARNING"@en ;
+    rdfs:label "경고"@ko ;
+    :levelCode "1"^^xsd:integer .
+
+:CRITICAL rdf:type :AlertLevel ;
+    rdfs:label "CRITICAL"@en ;
+    rdfs:label "위급"@ko ;
+    :levelCode "2"^^xsd:integer .
+
+# ============================================
+# Sample Instances (Demo Data)
+# ============================================
+
+# Sensor
+:sensor_MR60BHA2_001 rdf:type :Sensor ;
+    :sensorId "MR60BHA2-001" ;
+    :sensorType "60GHz mmWave Radar" ;
+    rdfs:label "Room 101 Sensor" .
+
+# Patients
+:patient_P001 rdf:type :Patient ;
+    :patientId "P001" ;
+    :patientName "홍길동" ;
+    rdfs:label "Patient P001" .
+
+:patient_P002 rdf:type :Patient ;
+    :patientId "P002" ;
+    :patientName "김영희" ;
+    rdfs:label "Patient P002" .
+
+:patient_P003 rdf:type :Patient ;
+    :patientId "P003" ;
+    :patientName "이철수" ;
+    rdfs:label "Patient P003" .
+
+# Normal Vital Observation
+:obs_P001_20241201_0800 rdf:type :VitalObservation ;
+    :aboutPatient :patient_P001 ;
+    :measuredBy :sensor_MR60BHA2_001 ;
+    :hrValue "72.0"^^xsd:float ;
+    :brValue "16.0"^^xsd:float ;
+    :observedAt "2024-12-01T08:00:00"^^xsd:dateTime ;
+    rdfs:comment "정상 상태"@ko .
+
+# Warning Vital Observation (Tachycardia)
+:obs_P002_20241201_0900 rdf:type :VitalObservation ;
+    :aboutPatient :patient_P002 ;
+    :measuredBy :sensor_MR60BHA2_001 ;
+    :hrValue "115.0"^^xsd:float ;
+    :brValue "22.0"^^xsd:float ;
+    :observedAt "2024-12-01T09:00:00"^^xsd:dateTime ;
+    rdfs:comment "빈맥 - 경고"@ko .
+
+# Critical Vital Observation (Bradypnea)
+:obs_P003_20241201_1000 rdf:type :VitalObservation ;
+    :aboutPatient :patient_P003 ;
+    :measuredBy :sensor_MR60BHA2_001 ;
+    :hrValue "45.0"^^xsd:float ;
+    :brValue "6.0"^^xsd:float ;
+    :observedAt "2024-12-01T10:00:00"^^xsd:dateTime ;
+    rdfs:comment "서맥 + 서호흡 - 위급"@ko .
+
+# ============================================
+# SPARQL Query Examples (Comments)
+# ============================================
+
+# Query 1: 이상 Vital Sign 조회
+# PREFIX : <http://kaist.ac.kr/elderly#>
+# SELECT ?patient ?hr ?br
+# WHERE {
+#     ?o a :VitalObservation ;
+#        :aboutPatient ?patient ;
+#        :hrValue ?hr ;
+#        :brValue ?br ;
+#        :observedAt ?t .
+#     FILTER(?hr > 110 || ?br < 8)
+# }
+
+# Query 2: 특정 환자의 최근 Vital Sign
+# PREFIX : <http://kaist.ac.kr/elderly#>
+# SELECT ?hr ?br ?t
+# WHERE {
+#     ?o a :VitalObservation ;
+#        :aboutPatient :patient_P001 ;
+#        :hrValue ?hr ;
+#        :brValue ?br ;
+#        :observedAt ?t .
+# }
+# ORDER BY DESC(?t)
+# LIMIT 10

@@ -1,0 +1,74 @@
+# LangGraph Ambient Agent Configuration
+# KAIST AI Graduate School CAIO 9
+
+# ===========================================
+# SPARQL/Fuseki 설정 (Mock 모드 사용)
+# ===========================================
+sparql:
+  endpoint: "http://localhost:3030/elderly/sparql"
+  use_mock: true  # true = Mock 데이터 사용, false = 실제 Fuseki 연결
+  timeout: 10  # seconds
+
+# ===========================================
+# 센서 데이터 설정
+# ===========================================
+sensor:
+  sampling_rate: 1.0  # Hz (1초에 1샘플)
+  window_size: 60     # 분석 윈도우 크기 (초)
+
+# ===========================================
+# 이상 탐지 임계값
+# ===========================================
+thresholds:
+  # SPARQL 규칙 기반 (Vital Sign 범위)
+  heart_rate:
+    min: 50
+    max: 110
+  breathing_rate:
+    min: 8
+    max: 25
+
+  # AutoEncoder 이상도 임계값
+  ae_anomaly_threshold: 0.35
+
+  # GBM 위험도 임계값
+  gbm_risk_threshold: 0.6
+
+  # 최종 판단 임계값
+  decision:
+    critical_ae: 0.35
+    critical_gbm: 0.6
+    warning_ae: 0.25
+    warning_gbm: 0.4
+
+# ===========================================
+# 알림 설정
+# ===========================================
+alert:
+  endpoint: "http://localhost:8000/notify"
+  use_mock: true  # true = 콘솔 출력, false = 실제 HTTP 전송
+  retry_count: 3
+  retry_delay: 1  # seconds
+
+  # 알림 대상
+  targets:
+    - type: "mobile"
+      description: "보호자 모바일 앱"
+    - type: "dashboard"
+      description: "관제 센터 대시보드"
+    - type: "nursing_station"
+      description: "간호스테이션"
+
+# ===========================================
+# 모델 경로
+# ===========================================
+models:
+  autoencoder: "models/autoencoder_v1.0.pth"
+  gbm: "models/gbm_risk_model.pkl"
+
+# ===========================================
+# 로깅 설정
+# ===========================================
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

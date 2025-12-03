@@ -1,0 +1,31 @@
+# LangGraph Ambient Agent for Elderly Care
+# KAIST AI Graduate School CAIO 9
+
+# LangGraph & LangChain
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+
+# Data Processing
+numpy>=1.21.0
+pandas>=1.3.0
+
+# Deep Learning (AutoEncoder)
+torch>=1.9.0
+
+# Machine Learning (GBM)
+scikit-learn>=1.0.0
+xgboost>=1.5.0
+joblib>=1.1.0
+
+# HTTP & API
+requests>=2.25.0
+
+# Configuration
+pyyaml>=6.0
+
+# SPARQL (Optional - for real Fuseki connection)
+SPARQLWrapper>=2.0.0
+
+# Visualization (Optional)
+matplotlib>=3.4.0

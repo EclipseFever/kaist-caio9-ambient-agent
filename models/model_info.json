@@ -1,0 +1,29 @@
+{
+  "created_at": "2025-12-03T21:06:17.055036",
+  "project": "kaist-caio9-ambient-agent",
+  "models": {
+    "autoencoder": {
+      "architecture": "SimpleAutoEncoder",
+      "input_dim": 60,
+      "latent_dim": 20,
+      "parameters": 13328,
+      "final_loss": 8.482800694764592e-06
+    },
+    "gbm": {
+      "type": "MockGBMModel",
+      "features": [
+        "hr_mean",
+        "hr_std",
+        "hr_min",
+        "hr_max",
+        "hr_trend",
+        "br_mean",
+        "br_std",
+        "br_min",
+        "br_max",
+        "br_trend"
+      ],
+      "version": "1.0.0"
+    }
+  }
+}
